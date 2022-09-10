@@ -1,0 +1,4 @@
+EMBEDDER = None
+SUMMARY_MODEL_NAME = "cross-encoder/stsb-TinyBERT-L-4"
+RANDOM_STATE = 43
+SECRET_KEY = "a7af949a191240cdab7a628ab1fbe68b"
