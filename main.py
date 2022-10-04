@@ -1,12 +1,10 @@
 from flask import Flask, jsonify, request
-from helper import set_embedder
 from generator import SummaryGeneratorExtractive
 from flask_cors import CORS
 import constants
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = constants.SECRET_KEY
-set_embedder()
 CORS(app)
 
 obj = SummaryGeneratorExtractive()

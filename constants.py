@@ -1,4 +1,7 @@
-EMBEDDER = None
-SUMMARY_MODEL_NAME = "cross-encoder/stsb-TinyBERT-L-4"
+import os
+
 RANDOM_STATE = 43
 SECRET_KEY = "a7af949a191240cdab7a628ab1fbe68b"
+
+INTELLIGENCE_HOST = os.environ.get("INTELLIGENCE_HOST", "localhost")
+INTELLIGENCE_PORT = 5002

@@ -30,7 +30,7 @@ class SummaryGeneratorExtractive:
 
     def get_summary_result(self, text, **kwargs):
         try:
-            ratio = kwargs.get("ratio", 0.3)
+            ratio = kwargs.get("ratio", 0.4)
             self.sentences = np.array(get_sentence_from_text(text))
             total_sentences = len(self.sentences)
             self.df = pd.DataFrame(self.sentences, columns=["sentences"])

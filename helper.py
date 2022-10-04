@@ -1,4 +1,6 @@
+import json
 import math
+import requests
 import constants
 import numpy as np
 from nltk import sent_tokenize
@@ -6,11 +8,6 @@ from scipy.spatial import distance
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MinMaxScaler
-from sentence_transformers import SentenceTransformer
-# from tqdm import tqdm
-# import nltk
-
-# nltk.download('averaged_perceptron_tagger')
 
 
 def get_sentence_from_text(text):
@@ -19,21 +16,20 @@ def get_sentence_from_text(text):
     return sentence_list
 
 
-def get_embedder(model_type):
-    print(f"Started Loading Model: {model_type} ...")
-    return SentenceTransformer(model_type)
-
-
-def set_embedder(model_type=constants.SUMMARY_MODEL_NAME):
-    constants.EMBEDDER = get_embedder(model_type)
+def get_text_vector(text: str):
+    payload = json.dumps({
+        "text": text
+    })
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.post(url=f"http://{constants.INTELLIGENCE_HOST}:{constants.INTELLIGENCE_PORT}/vectorizer",
+                             headers=headers, data=payload)
+    return response.json()["contextual_vector"]
 
 
 def get_embedding_from_sentence(data, normalise=False):
-    if isinstance(data, str):
-        data = get_sentence_from_text(data)
-    if constants.EMBEDDER is None:
-        constants.EMBEDDER = get_embedder(constants.SUMMARY_MODEL_NAME)
-    sentence_embeddings = constants.EMBEDDER.encode(data)
+    sentence_embeddings = [get_text_vector(i) for i in data]
     if normalise:
         sentence_embeddings_norm = sentence_embeddings / np.linalg.norm(sentence_embeddings,
                                                                         axis=1, keepdims=True)
