@@ -2,6 +2,7 @@ from helper import *
 from scipy.spatial import KDTree
 from collections import Counter
 import pandas as pd
+import re
 
 
 class SummaryGeneratorExtractive:
@@ -66,6 +67,11 @@ class SummaryGeneratorExtractive:
             summary_sentences = [summary_sentence[0].upper() + summary_sentence[1:] for summary_sentence in
                                  summary_sentences]
             summary = " ".join(summary_sentences)
+
+            # Removing
+            summary = re.sub("""[^a-zA-Z' ."']+""", '', summary)
+            regex = re.compile(r'<[^>]+>')
+            summary = regex.sub('', summary)
         except Exception as e:
             print(e)
             summary = text
