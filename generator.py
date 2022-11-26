@@ -69,7 +69,7 @@ class SummaryGeneratorExtractive:
             summary = " ".join(summary_sentences)
 
             # Removing
-            summary = re.sub("""[^a-zA-Z' ."']+""", '', summary)
+            summary = re.sub("""[^a-zA-Z0-9' ."']+""", '', summary)
             regex = re.compile(r'<[^>]+>')
             summary = regex.sub('', summary)
         except Exception as e:
